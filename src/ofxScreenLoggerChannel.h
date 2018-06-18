@@ -9,12 +9,15 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxFontStash.h"
 
 class ofxScreenLoggerChannel : public ofBaseLoggerChannel
 {
 public:
     ofxScreenLoggerChannel();
     ~ofxScreenLoggerChannel();
+
+    void setup(string fontfile,int size);
     
     void log(ofLogLevel level, const string & module, const string & message);
     void log(ofLogLevel level, const string & module, const char* format, ...) OF_PRINTF_ATTR(4, 5);
@@ -45,6 +48,10 @@ public:
     void mouseScrolled(ofMouseEventArgs& args);
     
 private:
+
+    ofxFontStash            *font;
+    int                     fontSize;
+
     std::list<string> _buffer;
     int _maxBufferCount;
     

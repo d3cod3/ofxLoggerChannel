@@ -22,6 +22,9 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
 , _bMouseInside(false)
 , _scrollOffset(0)
 {
+    font        = new ofxFontStash();
+    fontSize    = 12;
+
     ofAddListener(ofEvents().mouseDragged, this, &ofxScreenLoggerChannel::mouseDragged);
     ofAddListener(ofEvents().mouseMoved, this, &ofxScreenLoggerChannel::mouseMoved);
     ofAddListener(ofEvents().mouseScrolled, this, &ofxScreenLoggerChannel::mouseScrolled);
@@ -35,6 +38,12 @@ ofxScreenLoggerChannel::~ofxScreenLoggerChannel()
     ofRemoveListener(ofEvents().mouseDragged, this, &ofxScreenLoggerChannel::mouseDragged);
     ofRemoveListener(ofEvents().mouseMoved, this, &ofxScreenLoggerChannel::mouseMoved);
     ofRemoveListener(ofEvents().mouseScrolled, this, &ofxScreenLoggerChannel::mouseScrolled);
+}
+
+//--------------------------------------------------------------
+void ofxScreenLoggerChannel::setup(string fontfile,int size){
+    fontSize = size;
+    font->setup(fontfile,1.0,2048,true,8,3.0f);
 }
 
 //--------------------------------------------------------------
@@ -138,7 +147,11 @@ void ofxScreenLoggerChannel::draw() const
             }else if(tmpMsg.find("[silent") != std::string::npos || tmpMsg.find("[verbose") != std::string::npos) {
                 ofSetColor(_textColor);
             }
-            ofDrawBitmapString(msg, _drawBounds.x + currX, _drawBounds.y + currY);
+            if(font->isLoaded()){
+                font->draw(msg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY);
+            }else{
+                ofDrawBitmapString(msg, _drawBounds.x + currX, _drawBounds.y + currY);
+            }
             
             // Go to the next line.
             currY += kLineHeight;
