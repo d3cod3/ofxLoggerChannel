@@ -34,6 +34,8 @@ public:
     
     void setTextColor(const ofColor& textColor);
     const ofColor& getTextColor() const;
+
+    void setColors(const ofColor& nColor,const ofColor& wColor,const ofColor& eColor);
     
     void setPrefixTimestamp(bool bPrefixTimestamp);
     bool getPrefixTimestamp() const;
@@ -49,6 +51,9 @@ private:
     ofRectangle _drawBounds;
     ofColor _backgroundColor;
     ofColor _textColor;
+    ofColor _noticeColor;
+    ofColor _warningColor;
+    ofColor _errorColor;
     bool _bPrefixTimestamp;
     
     bool _bMouseInside;

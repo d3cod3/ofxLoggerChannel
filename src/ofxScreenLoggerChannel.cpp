@@ -14,7 +14,10 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
 , _maxBufferCount(100)
 , _drawBounds(0, 0, ofGetWidth(), ofGetHeight() / 4)
 , _backgroundColor(0, 0, 0, 200)
-, _textColor(0, 255, 0, 255)
+, _textColor(255, 255, 255, 255)
+, _noticeColor(255, 255, 255, 255)
+, _warningColor(255, 127, 0, 255)
+, _errorColor(255, 45, 45, 255)
 , _bPrefixTimestamp(true)
 , _bMouseInside(false)
 , _scrollOffset(0)
@@ -115,7 +118,7 @@ void ofxScreenLoggerChannel::draw() const
         static const int kTextPadding = 10;
         int currX = kTextPadding;
         int currY = kTextPadding * 2;
-        ofSetColor(_textColor);
+        //ofSetColor(_textColor);
         
         int currOffset = 0;
         for (const auto& msg : _buffer) {
@@ -125,6 +128,16 @@ void ofxScreenLoggerChannel::draw() const
                 continue;
             }
             
+            string tmpMsg = msg;
+            if (tmpMsg.find("[notice") != std::string::npos) {
+                ofSetColor(_noticeColor);
+            }else if(tmpMsg.find("[warning") != std::string::npos) {
+                ofSetColor(_warningColor);
+            }else if(tmpMsg.find("[error") != std::string::npos || tmpMsg.find("[fatal") != std::string::npos) {
+                ofSetColor(_errorColor);
+            }else if(tmpMsg.find("[silent") != std::string::npos || tmpMsg.find("[verbose") != std::string::npos) {
+                ofSetColor(_textColor);
+            }
             ofDrawBitmapString(msg, _drawBounds.x + currX, _drawBounds.y + currY);
             
             // Go to the next line.
@@ -184,6 +197,13 @@ void ofxScreenLoggerChannel::setTextColor(const ofColor& textColor)
 const ofColor& ofxScreenLoggerChannel::getTextColor() const
 {
     return _textColor;
+}
+
+//--------------------------------------------------------------
+void ofxScreenLoggerChannel::setColors(const ofColor& nColor,const ofColor& wColor,const ofColor& eColor){
+    _noticeColor = nColor;
+    _warningColor = wColor;
+    _errorColor = eColor;
 }
 
 //--------------------------------------------------------------
