@@ -142,7 +142,7 @@ void ofxScreenLoggerChannel::draw() const
                 ofSetColor(_noticeColor);
             }else if(tmpMsg.find("[warning") != std::string::npos) {
                 ofSetColor(_warningColor);
-            }else if(tmpMsg.find("[error") != std::string::npos || tmpMsg.find("[fatal") != std::string::npos) {
+            }else if(tmpMsg.find("[ error") != std::string::npos || tmpMsg.find("[ fatal") != std::string::npos) {
                 ofSetColor(_errorColor);
             }else if(tmpMsg.find("[silent") != std::string::npos || tmpMsg.find("[verbose") != std::string::npos) {
                 ofSetColor(_textColor);
