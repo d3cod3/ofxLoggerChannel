@@ -18,6 +18,8 @@ public:
     ~ofxScreenLoggerChannel();
 
     void setup(string fontfile,int size);
+
+    void setIsRetina();
     
     void log(ofLogLevel level, const string & module, const string & message);
     void log(ofLogLevel level, const string & module, const char* format, ...) OF_PRINTF_ATTR(4, 5);
@@ -51,6 +53,8 @@ private:
 
     ofxFontStash            *font;
     int                     fontSize;
+    bool                    isRetina;
+    float                   retinaScale;
 
     std::list<string> _buffer;
     int _maxBufferCount;

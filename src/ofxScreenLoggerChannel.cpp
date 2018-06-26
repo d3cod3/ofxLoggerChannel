@@ -24,6 +24,8 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
 {
     font        = new ofxFontStash();
     fontSize    = 12;
+    isRetina    = false;
+    retinaScale = 1.0f;
 
     ofAddListener(ofEvents().mouseDragged, this, &ofxScreenLoggerChannel::mouseDragged);
     ofAddListener(ofEvents().mouseMoved, this, &ofxScreenLoggerChannel::mouseMoved);
@@ -44,6 +46,12 @@ ofxScreenLoggerChannel::~ofxScreenLoggerChannel()
 void ofxScreenLoggerChannel::setup(string fontfile,int size){
     fontSize = size;
     font->setup(fontfile,1.0,2048,true,8,3.0f);
+}
+
+//--------------------------------------------------------------
+void ofxScreenLoggerChannel::setIsRetina(){
+    isRetina    = true;
+    retinaScale = 2.0f;
 }
 
 //--------------------------------------------------------------
@@ -123,8 +131,8 @@ void ofxScreenLoggerChannel::draw() const
         ofDrawRectangle(_drawBounds);
         
         // Draw the messages list.
-        static const int kLineHeight = 12;
-        static const int kTextPadding = 10;
+        static const int kLineHeight = 12*static_cast<int>(retinaScale);
+        static const int kTextPadding = 10*static_cast<int>(retinaScale);
         int currX = kTextPadding;
         int currY = kTextPadding * 2;
         //ofSetColor(_textColor);
