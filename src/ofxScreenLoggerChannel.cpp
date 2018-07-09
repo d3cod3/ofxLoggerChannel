@@ -69,14 +69,16 @@ void ofxScreenLoggerChannel::log(ofLogLevel level, const string & module, const 
     oss << message << endl;
     
     // Add it to the buffer.
-    _buffer.push_front(oss.str());
+    //_buffer.push_front(oss.str());
+    _buffer.push_back(oss.str());
     
     // Adjust offset if necessary.
     if (_scrollOffset > 0) ++_scrollOffset;
     
     // Erase older messages.
     while (_maxBufferCount > 0 && _buffer.size() > _maxBufferCount) {
-        _buffer.pop_back();
+        //_buffer.pop_back();
+        _buffer.pop_front();
     }
 }
 
@@ -104,14 +106,16 @@ void ofxScreenLoggerChannel::log(ofLogLevel level, const string & module, const 
     oss << ofVAArgsToString(format, args) << endl;
     
     // Add it to the buffer.
-    _buffer.push_front(oss.str());
+    //_buffer.push_front(oss.str());
+    _buffer.push_back(oss.str());
     
     // Adjust offset if necessary.
     if (_scrollOffset > 0) ++_scrollOffset;
     
     // Erase older messages.
     while (_buffer.size() > _maxBufferCount) {
-        _buffer.pop_back();
+        //_buffer.pop_back();
+        _buffer.pop_front();
     }
 }
 
