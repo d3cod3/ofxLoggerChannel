@@ -63,6 +63,7 @@ private:
     ofRectangle _drawBounds;
     ofColor _backgroundColor;
     ofColor _textColor;
+    ofColor _verboseColor;
     ofColor _noticeColor;
     ofColor _warningColor;
     ofColor _errorColor;

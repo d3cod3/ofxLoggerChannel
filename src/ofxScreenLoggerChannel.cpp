@@ -15,6 +15,7 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
 , _drawBounds(0, 0, ofGetWidth(), ofGetHeight() / 4)
 , _backgroundColor(0, 0, 0, 200)
 , _textColor(255, 255, 255, 255)
+, _verboseColor(60, 255, 60, 255)
 , _noticeColor(255, 255, 255, 255)
 , _warningColor(255, 127, 0, 255)
 , _errorColor(255, 45, 45, 255)
@@ -26,7 +27,7 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
     fontSize            = 12;
     isRetina            = false;
     retinaScale         = 1.0f;
-    maxVisibleLines     = 20;
+    maxVisibleLines     = 18;
 
     ofAddListener(ofEvents().mouseDragged, this, &ofxScreenLoggerChannel::mouseDragged);
     ofAddListener(ofEvents().mouseMoved, this, &ofxScreenLoggerChannel::mouseMoved);
@@ -163,9 +164,17 @@ void ofxScreenLoggerChannel::draw() const
                 ofSetColor(_warningColor);
             }else if(tmpMsg.find("[ error") != std::string::npos || tmpMsg.find("[ fatal") != std::string::npos) {
                 ofSetColor(_errorColor);
-            }else if(tmpMsg.find("[silent") != std::string::npos || tmpMsg.find("[verbose") != std::string::npos) {
+            }else if(tmpMsg.find("[silent") != std::string::npos || tmpMsg.find("[ silent") != std::string::npos) {
+                ofSetColor(_textColor);
+            }else{
                 ofSetColor(_textColor);
             }
+
+            // FORCE CUSTOM VERBOSE
+            if(tmpMsg.find("[verbose]") != std::string::npos){
+                ofSetColor(_verboseColor);
+            }
+
             if(font->isLoaded()){
                 font->draw(msg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY);
             }else{
