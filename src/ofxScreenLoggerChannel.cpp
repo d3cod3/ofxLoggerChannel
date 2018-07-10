@@ -22,10 +22,11 @@ ofxScreenLoggerChannel::ofxScreenLoggerChannel()
 , _bMouseInside(false)
 , _scrollOffset(0)
 {
-    font        = new ofxFontStash();
-    fontSize    = 12;
-    isRetina    = false;
-    retinaScale = 1.0f;
+    font                = new ofxFontStash();
+    fontSize            = 12;
+    isRetina            = false;
+    retinaScale         = 1.0f;
+    maxVisibleLines     = 20;
 
     ofAddListener(ofEvents().mouseDragged, this, &ofxScreenLoggerChannel::mouseDragged);
     ofAddListener(ofEvents().mouseMoved, this, &ofxScreenLoggerChannel::mouseMoved);
@@ -74,6 +75,9 @@ void ofxScreenLoggerChannel::log(ofLogLevel level, const string & module, const 
     
     // Adjust offset if necessary.
     if (_scrollOffset > 0) ++_scrollOffset;
+
+    // Auto scroll
+    _scrollOffset = MAX(0, _buffer.size() - maxVisibleLines);
     
     // Erase older messages.
     while (_maxBufferCount > 0 && _buffer.size() > _maxBufferCount) {
@@ -111,6 +115,9 @@ void ofxScreenLoggerChannel::log(ofLogLevel level, const string & module, const 
     
     // Adjust offset if necessary.
     if (_scrollOffset > 0) ++_scrollOffset;
+
+    // Auto scroll
+    _scrollOffset = MAX(0, _buffer.size() - maxVisibleLines);
     
     // Erase older messages.
     while (_buffer.size() > _maxBufferCount) {

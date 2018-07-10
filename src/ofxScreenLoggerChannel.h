@@ -55,6 +55,7 @@ private:
     int                     fontSize;
     bool                    isRetina;
     float                   retinaScale;
+    int                     maxVisibleLines;
 
     std::list<string> _buffer;
     int _maxBufferCount;
@@ -69,4 +70,5 @@ private:
     
     bool _bMouseInside;
     int _scrollOffset;
+
 };
