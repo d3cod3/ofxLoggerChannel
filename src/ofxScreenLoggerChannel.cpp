@@ -177,9 +177,11 @@ void ofxScreenLoggerChannel::draw() const
             }
 
             if(font->isLoaded()){
-                //font->draw(msg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY);
                 int numLinesTemp = 1;
-                font->drawMultiLineColumn(tmpMsg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY, _drawBounds.width, numLinesTemp);
+
+                // font->draw(msg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY);
+                font->drawMultiLineColumn(tmpMsg, fontSize, _drawBounds.x + currX, _drawBounds.y + currY, _drawBounds.width - 40, numLinesTemp);
+
                 if(numLinesTemp > 1){
                     // skip necessary lines
                     currY += kLineHeight*(numLinesTemp-1);
